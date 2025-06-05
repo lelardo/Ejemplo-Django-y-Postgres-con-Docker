@@ -28,3 +28,18 @@ class UsuarioPersonalizado(AbstractUser):
     
     def __str__(self):
         return self.username
+
+class Publicacion(models.Model):
+    usuario = models.ForeignKey(UsuarioPersonalizado, on_delete=models.CASCADE, related_name='publicaciones')
+    titulo = models.CharField(max_length=200)
+    contenido = models.TextField()
+    imagen = models.BinaryField(blank=True, null=True, editable=True)  # Añade editable=True
+    imagen_name = models.CharField(max_length=100, blank=True, null=True)
+    imagen_type = models.CharField(max_length=30, blank=True, null=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-fecha_creacion']
+
+    def __str__(self):
+        return f"{self.titulo} - {self.usuario.username}"

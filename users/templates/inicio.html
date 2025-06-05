@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenido a Nuestra Aplicación</h1>
+        <h1>Dino feisbuc</h1>
         
         <div class="nav-buttons">
             {% if user.is_authenticated %}
@@ -20,8 +20,37 @@
             {% endif %}
         </div>
         
-        <div class="content">
-            <p>Esta es la página principal de nuestra aplicación. Aquí puedes encontrar información sobre nuestros servicios.</p>
+        
+        <!-- Sección de publicaciones -->
+        <div class="publicaciones">
+            <h2>Publicaciones Recientes</h2>
+            
+            {% if publicaciones %}
+                {% for publicacion in publicaciones %}
+                    <div class="publicacion">
+                        <div class="publicacion-header">
+                            <div class="usuario-info">
+                                {% if publicacion.usuario.profile_picture %}
+                                <img src="{% url 'profile_picture' publicacion.usuario.id %}" alt="Foto de perfil" class="avatar">
+                                {% else %}
+                                <img src="{% static 'images/default-profile.png' %}" alt="Foto de perfil predeterminada" class="avatar">
+                                {% endif %}
+                                <span class="username">{{ publicacion.usuario.username }}</span>
+                            </div>
+                            <span class="fecha">{{ publicacion.fecha_creacion|date:"d/m/Y H:i" }}</span>
+                        </div>
+                        <h3>{{ publicacion.titulo }}</h3>
+                        <div class="contenido">{{ publicacion.contenido }}</div>
+                        {% if publicacion.imagen %}
+                            <div class="imagen">
+                                <img src="{% url 'publicacion_imagen' publicacion.id %}" alt="Imagen de la publicación">
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No hay publicaciones disponibles.</p>
+            {% endif %}
         </div>
     </div>
 </body>

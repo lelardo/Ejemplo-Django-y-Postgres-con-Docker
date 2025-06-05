@@ -9,5 +9,5 @@ urlpatterns = [
     path('logout/', custom_logout, name='logout'),
     path('perfil/', perfil, name='perfil'),
     path('profile-picture/<int:user_id>/', profile_picture, name='profile_picture'),
-
+    path('publicacion-imagen/<int:publicacion_id>/', publicacion_imagen, name='publicacion_imagen'),
 ]

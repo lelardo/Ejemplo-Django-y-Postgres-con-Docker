@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import UsuarioPersonalizado
+from .models import UsuarioPersonalizado, Publicacion
 
 class RegistroUsuarioForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -40,3 +40,14 @@ class RegistroUsuarioForm(UserCreationForm):
             user.save()
             
         return user
+
+class PublicacionForm(forms.ModelForm):
+    imagen = forms.ImageField(required=False)
+    
+    class Meta:
+        model = Publicacion
+        fields = ('titulo', 'contenido', 'imagen')
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'contenido': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
